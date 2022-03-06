@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
+using Json.Net;
 
 namespace BetterTaskbar
 {
@@ -18,10 +14,6 @@ namespace BetterTaskbar
             InitializeComponent();
 
             
-
-
-
-
             this.WindowState = FormWindowState.Normal;
             this.TopMost = true;
             
@@ -41,24 +33,33 @@ namespace BetterTaskbar
 
             //Making it non-resizable
             this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-
+            this.ShowInTaskbar = false;
 
             //Getting and accessing the flowPanel
             FlowLayoutPanel taskBarFlowLayout = this.taskBarIcons;
             taskBarFlowLayout.Height = 100;
+
             //Read from a file here for shortcuts
-            Button temp;
+            using (StreamReader r = new StreamReader("./shortcutList.json"))
+            {
+                string json = r.ReadToEnd();
+                
+            }
+
+
+
+                Button temp;
             for(int i=0; i < 200; i++)
             {
                 temp = new Button();
-                temp.Text = i.ToString(); //Text is the name of application to open
+                temp.Text = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"; //Text is the name of application to open
                 //need to figure out text visibility
                 temp.Click += button_Clicked;
                 temp.MinimumSize = new Size(0, 0);
                 temp.MaximumSize = new Size(50, 50);
                 temp.Height = 25;
                 temp.Width = 25;
-                Icon icon = System.Drawing.Icon.ExtractAssociatedIcon("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
+                Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(temp.Text);
                 
                 //Icon icon = System.Drawing.Icon.ExtractAssociatedIcon("firefox.exe"); //need to find the path for each application to load
                 Image img = icon.ToBitmap(); // Image.FromFile("C:\\Repositories\\BetterTaskbar\\BetterTaskbar\\BetterTaskbar\\test.png");
@@ -70,7 +71,7 @@ namespace BetterTaskbar
 
 
 
-            var fb = this.ClientRectangle; // Or form.Bounds
+            var fb = this.ClientRectangle;
 
             EventHandler tickHandler = (sender, args) =>
             {
@@ -82,25 +83,12 @@ namespace BetterTaskbar
                 if ((mp.X < fb.X + fb.Width) 
                 && (mp.X > fb.X) 
                 && (mp.Y > screen.Height - fb.Height) 
-                && (mp.Y < screen.Height))//!(mp.X < fb.X && mp.Y < fb.Y && mp.X > fb.X + fb.Width && mp.Y > fb.Y + fb.Height))
+                && (mp.Y < screen.Height))
                 {
-                    /*
-                    Console.WriteLine("Should Maximize");
-                    this.WindowState = FormWindowState.Normal;
-                    this.TopMost = true;
-                    */ //trying just moving the app off screen instead of min/maxing it for reduction of appearence lag
-                    //Moving app faster than minimizing and maximizing app
                     this.Location = new Point(0, (screen.Height - h) + 37);
-
-                    // Use GetKeyState from user32.dll to detect if at least 1 key is pressed
-                    // (look at internet how to do it exactly)
-                    // If yes MessageBox.Show("Clicked outside");
                 }
                 else
                 {
-                    //Console.WriteLine("Should Minimize");
-                    //this.WindowState = FormWindowState.Minimized;
-                    //this.TopMost = false;
                     this.Location = new Point(0, (screen.Height - h) + 137);
                 }
             };
@@ -125,12 +113,8 @@ namespace BetterTaskbar
         private void button_Clicked(object sender, EventArgs e)
         {
             Button t = (Button)sender;
-            //t.Text = "clicked";
-            //t.Image = null;
-
-            
             Process p = new Process();
-            p.StartInfo.FileName = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+            p.StartInfo.FileName = t.Text;
             p.Start();
             return;
         }
