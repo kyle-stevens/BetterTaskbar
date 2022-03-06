@@ -1,0 +1,11 @@
+C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\bin\Debug\BetterTaskbar.exe.config
+C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\bin\Debug\BetterTaskbar.exe
+C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\bin\Debug\BetterTaskbar.pdb
+C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.csproj.AssemblyReference.cache
+C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.csproj.SuggestedBindingRedirects.cache
+C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.Form1.resources
+C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.Properties.Resources.resources
+C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.csproj.GenerateResource.cache
+C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.csproj.CoreCompileInputs.cache
+C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.exe
+C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.pdb
