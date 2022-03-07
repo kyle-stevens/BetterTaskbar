@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Json.Net;
+using Microsoft.Win32;
 
 namespace BetterTaskbar
 {
@@ -12,8 +13,33 @@ namespace BetterTaskbar
         public Form1()
         {
             InitializeComponent();
+            int numberOfIcons = 0;
+            int MAX_ICON_COUNT = 152 * (int)(Screen.PrimaryScreen.WorkingArea.Width / 1920) - 1;
 
+
+            string[] applicationsDetected = new string[300]; 
             
+            //trying to get all software on system
+            string registry_key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
+            using (Microsoft.Win32.RegistryKey key = Registry.LocalMachine.OpenSubKey(registry_key))
+            {
+                int count = 0;
+                foreach(string subkey_name in key.GetSubKeyNames())
+                {
+                    using(RegistryKey subkey = key.OpenSubKey(subkey_name))
+                    {
+
+                        if(subkey.GetValue("InstallLocation") != null)
+                        {
+                            applicationsDetected[count] = (subkey.GetValue("DisplayName").ToString() + ":" + subkey.GetValue("InstallLocation").ToString());
+                            Console.WriteLine("Element Added");
+                            count++;
+                        }
+                        
+                    }
+                }
+            }
+
             this.WindowState = FormWindowState.Normal;
             this.TopMost = true;
             
@@ -36,8 +62,12 @@ namespace BetterTaskbar
             this.ShowInTaskbar = false;
 
             //Getting and accessing the flowPanel
-            FlowLayoutPanel taskBarFlowLayout = this.taskBarIcons;
-            taskBarFlowLayout.Height = 100;
+            ToolStrip taskBarFlowLayout = this.taskbarIcons;
+            taskBarFlowLayout.Height = 60;
+            taskBarFlowLayout.AutoSize = false;
+            taskBarFlowLayout.LayoutStyle = ToolStripLayoutStyle.Flow;
+            taskBarFlowLayout.ImageScalingSize = new Size(20, 20);
+            taskBarFlowLayout.AllowItemReorder = true;
 
             //Read from a file here for shortcuts
             /*using (StreamReader r = new StreamReader("./shortcutList.json"))
@@ -47,27 +77,35 @@ namespace BetterTaskbar
             }
             */
 
-            /*
-            Button temp;
-            for(int i=0; i < 200; i++)
+            
+            
+            for(int i=0; i < 152; i++)
             {
-                temp = new Button();
-                temp.Text = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"; //Text is the name of application to open
+                ToolStripButton temp;
+                temp = new ToolStripButton();
+                temp.Tag = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"; //Text is the name of application to open
                 //need to figure out text visibility
                 temp.Click += button_Clicked;
-                temp.MinimumSize = new Size(0, 0);
-                temp.MaximumSize = new Size(50, 50);
+                //temp.MinimumSize = new Size(0, 0);
+                //temp.MaximumSize = new Size(50, 50);
                 temp.Height = 25;
                 temp.Width = 25;
-                Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(temp.Text);
-                
+                Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(temp.Tag.ToString());
+
                 //Icon icon = System.Drawing.Icon.ExtractAssociatedIcon("firefox.exe"); //need to find the path for each application to load
                 Image img = icon.ToBitmap(); // Image.FromFile("C:\\Repositories\\BetterTaskbar\\BetterTaskbar\\BetterTaskbar\\test.png");
                 temp.Image = img;
+                if(numberOfIcons <= MAX_ICON_COUNT){
+                    taskBarFlowLayout.Items.Add(temp);
+                    numberOfIcons++;
+                }
+                else
+                {
+                    MessageBox.Show("Max Number of Icons Reached");
+                }
                 
-                taskBarFlowLayout.Controls.Add(temp);
             }
-            */
+            
 
 
 
@@ -79,7 +117,7 @@ namespace BetterTaskbar
 
 
 
-                Console.WriteLine("MP: " + mp.ToString() + " FB: " + fb.ToString());
+                //Console.WriteLine("MP: " + mp.ToString() + " FB: " + fb.ToString());
                 if ((mp.X < fb.X + fb.Width) 
                 && (mp.X > fb.X) 
                 && (mp.Y > screen.Height - fb.Height) 
@@ -105,22 +143,70 @@ namespace BetterTaskbar
 
             EventHandler addShortcutEventHandler = (sender, args) =>
             {
-                Button temp;
-                temp = new Button();
-                temp.Text = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"; //Text is the name of application to open
+                if(numberOfIcons >= MAX_ICON_COUNT)
+                {
+                    MessageBox.Show("Max Number of Icons Reached");
+                    return;
+                }
+                //Create New Window to see items
+                Form addNewShortcutWindow = new Form();
+                addNewShortcutWindow.AutoSize = false;
+                addNewShortcutWindow.Size = new Size(500, 500);
+
+
+                ListBox applicationList = new ListBox();
+                applicationList.Width = 500;
+                applicationList.Height = 400;
+                applicationList.SelectionMode = SelectionMode.One;
+                applicationList.BeginUpdate();
+                Console.WriteLine(applicationsDetected.Length);
+                for(int i = 0; i < applicationsDetected.Length && applicationsDetected[i] != null; i++)
+                {
+
+                    applicationList.Items.Add(applicationsDetected[i].ToString().Substring(0, applicationsDetected[i].ToString().IndexOf(':')));
+                    Console.WriteLine("Item Added");
+                }
+                applicationList.EndUpdate();
+                applicationList.Hide();
+                applicationList.Show();
+                addNewShortcutWindow.Controls.Add(applicationList);
+
+                Label lbl = new Label();
+                lbl.Location = new Point(10, 400);
+                lbl.Width = 500;
+                lbl.Text = "Can't Find What You're Looking For? Find Your Application Manually";
+
+                addNewShortcutWindow.Controls.Add(lbl);
+
+                Button findAppManually = new Button();
+                findAppManually.Text = "Find .exe";
+                findAppManually.Location = new Point(10, 430);
+
+                addNewShortcutWindow.Controls.Add(findAppManually);
+
+                addNewShortcutWindow.Show();
+
+                ToolStripButton temp;
+                temp = new ToolStripButton();
+                temp.Tag = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"; //Text is the name of application to open
                 //need to figure out text visibility
                 temp.Click += button_Clicked;
-                temp.MinimumSize = new Size(0, 0);
-                temp.MaximumSize = new Size(50, 50);
-                temp.Height = 25;
-                temp.Width = 25;
-                Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(temp.Text);
+                //temp.MinimumSize = new Size(0, 0);
+                //temp.MaximumSize = new Size(50, 50);
+                temp.AutoSize = false;
+                temp.Height = 100;
+                temp.Width = 100;
+                Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(temp.Tag.ToString());
 
                 //Icon icon = System.Drawing.Icon.ExtractAssociatedIcon("firefox.exe"); //need to find the path for each application to load
                 Image img = icon.ToBitmap(); // Image.FromFile("C:\\Repositories\\BetterTaskbar\\BetterTaskbar\\BetterTaskbar\\test.png");
                 temp.Image = img;
+                if (numberOfIcons <= MAX_ICON_COUNT)
+                {
+                    taskBarFlowLayout.Items.Add(temp);
+                    numberOfIcons++;
+                }
 
-                taskBarFlowLayout.Controls.Add(temp);
             };
 
             Button addShortcut = this.addShortcutButton;
@@ -135,9 +221,9 @@ namespace BetterTaskbar
 
         private void button_Clicked(object sender, EventArgs e)
         {
-            Button t = (Button)sender;
+            ToolStripButton t = (ToolStripButton)sender;
             Process p = new Process();
-            p.StartInfo.FileName = t.Text;
+            p.StartInfo.FileName = t.Tag.ToString();
             p.Start();
             return;
         }

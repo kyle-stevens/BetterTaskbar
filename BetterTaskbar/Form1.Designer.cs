@@ -30,9 +30,9 @@
         {
             this.exitButton = new System.Windows.Forms.Button();
             this.optionsButton = new System.Windows.Forms.Button();
-            this.taskBarIcons = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.addShortcutButton = new System.Windows.Forms.Button();
+            this.taskbarIcons = new System.Windows.Forms.ToolStrip();
             this.SuspendLayout();
             // 
             // exitButton
@@ -59,13 +59,6 @@
             this.optionsButton.UseVisualStyleBackColor = true;
             this.optionsButton.Click += new System.EventHandler(this.optionsButton_Click);
             // 
-            // taskBarIcons
-            // 
-            this.taskBarIcons.Location = new System.Drawing.Point(0, 0);
-            this.taskBarIcons.Name = "taskBarIcons";
-            this.taskBarIcons.Size = new System.Drawing.Size(1839, 34);
-            this.taskBarIcons.TabIndex = 2;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -86,14 +79,24 @@
             this.addShortcutButton.Text = "+";
             this.addShortcutButton.UseVisualStyleBackColor = true;
             // 
+            // taskbarIcons
+            // 
+            this.taskbarIcons.Location = new System.Drawing.Point(0, 0);
+            this.taskbarIcons.MaximumSize = new System.Drawing.Size(1839, 150);
+            this.taskbarIcons.MinimumSize = new System.Drawing.Size(1839, 0);
+            this.taskbarIcons.Name = "taskbarIcons";
+            this.taskbarIcons.Size = new System.Drawing.Size(1839, 25);
+            this.taskbarIcons.TabIndex = 5;
+            this.taskbarIcons.Text = "toolStrip1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1904, 133);
+            this.Controls.Add(this.taskbarIcons);
             this.Controls.Add(this.addShortcutButton);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.taskBarIcons);
             this.Controls.Add(this.optionsButton);
             this.Controls.Add(this.exitButton);
             this.Name = "Form1";
@@ -108,9 +111,9 @@
 
         private System.Windows.Forms.Button exitButton;
         private System.Windows.Forms.Button optionsButton;
-        private System.Windows.Forms.FlowLayoutPanel taskBarIcons;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button addShortcutButton;
+        private System.Windows.Forms.ToolStrip taskbarIcons;
     }
 }
 
