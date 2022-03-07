@@ -9,3 +9,5 @@ C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskba
 C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.csproj.CoreCompileInputs.cache
 C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.exe
 C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.pdb
+C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\bin\Debug\Json.Net.dll
+C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.csproj.CopyComplete

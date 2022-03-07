@@ -32,6 +32,7 @@
             this.optionsButton = new System.Windows.Forms.Button();
             this.taskBarIcons = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
+            this.addShortcutButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // exitButton
@@ -48,7 +49,7 @@
             // 
             // optionsButton
             // 
-            this.optionsButton.Location = new System.Drawing.Point(1840, 3);
+            this.optionsButton.Location = new System.Drawing.Point(1845, 3);
             this.optionsButton.MaximumSize = new System.Drawing.Size(25, 25);
             this.optionsButton.MinimumSize = new System.Drawing.Size(25, 25);
             this.optionsButton.Name = "optionsButton";
@@ -62,7 +63,7 @@
             // 
             this.taskBarIcons.Location = new System.Drawing.Point(0, 0);
             this.taskBarIcons.Name = "taskBarIcons";
-            this.taskBarIcons.Size = new System.Drawing.Size(1830, 34);
+            this.taskBarIcons.Size = new System.Drawing.Size(1839, 34);
             this.taskBarIcons.TabIndex = 2;
             // 
             // label1
@@ -74,11 +75,23 @@
             this.label1.Size = new System.Drawing.Size(0, 13);
             this.label1.TabIndex = 3;
             // 
+            // addShortcutButton
+            // 
+            this.addShortcutButton.Location = new System.Drawing.Point(1845, 28);
+            this.addShortcutButton.MaximumSize = new System.Drawing.Size(25, 25);
+            this.addShortcutButton.MinimumSize = new System.Drawing.Size(25, 25);
+            this.addShortcutButton.Name = "addShortcutButton";
+            this.addShortcutButton.Size = new System.Drawing.Size(25, 25);
+            this.addShortcutButton.TabIndex = 4;
+            this.addShortcutButton.Text = "+";
+            this.addShortcutButton.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1904, 36);
+            this.ClientSize = new System.Drawing.Size(1904, 133);
+            this.Controls.Add(this.addShortcutButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.taskBarIcons);
             this.Controls.Add(this.optionsButton);
@@ -97,6 +110,7 @@
         private System.Windows.Forms.Button optionsButton;
         private System.Windows.Forms.FlowLayoutPanel taskBarIcons;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button addShortcutButton;
     }
 }
 

@@ -40,15 +40,15 @@ namespace BetterTaskbar
             taskBarFlowLayout.Height = 100;
 
             //Read from a file here for shortcuts
-            using (StreamReader r = new StreamReader("./shortcutList.json"))
+            /*using (StreamReader r = new StreamReader("./shortcutList.json"))
             {
                 string json = r.ReadToEnd();
                 
             }
+            */
 
-
-
-                Button temp;
+            /*
+            Button temp;
             for(int i=0; i < 200; i++)
             {
                 temp = new Button();
@@ -67,7 +67,7 @@ namespace BetterTaskbar
                 
                 taskBarFlowLayout.Controls.Add(temp);
             }
-
+            */
 
 
 
@@ -102,6 +102,29 @@ namespace BetterTaskbar
             t1.Tick += tickHandler;
             t1.Start();
 
+
+            EventHandler addShortcutEventHandler = (sender, args) =>
+            {
+                Button temp;
+                temp = new Button();
+                temp.Text = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"; //Text is the name of application to open
+                //need to figure out text visibility
+                temp.Click += button_Clicked;
+                temp.MinimumSize = new Size(0, 0);
+                temp.MaximumSize = new Size(50, 50);
+                temp.Height = 25;
+                temp.Width = 25;
+                Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(temp.Text);
+
+                //Icon icon = System.Drawing.Icon.ExtractAssociatedIcon("firefox.exe"); //need to find the path for each application to load
+                Image img = icon.ToBitmap(); // Image.FromFile("C:\\Repositories\\BetterTaskbar\\BetterTaskbar\\BetterTaskbar\\test.png");
+                temp.Image = img;
+
+                taskBarFlowLayout.Controls.Add(temp);
+            };
+
+            Button addShortcut = this.addShortcutButton;
+            addShortcut.Click += addShortcutEventHandler;
         }
 
         private void funcMouseCaptureChanged(object sender, EventArgs e)
