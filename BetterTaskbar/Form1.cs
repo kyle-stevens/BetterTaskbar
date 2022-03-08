@@ -10,12 +10,15 @@ namespace BetterTaskbar
 {
     public partial class Form1 : Form
     {
+        string ICON_SIZE = "SMALL";
+        
         public Form1()
         {
             InitializeComponent();
             int numberOfIcons = 0;
-            int MAX_ICON_COUNT = 152 * (int)(Screen.PrimaryScreen.WorkingArea.Width / 1920) - 1;
-
+            int MAX_ICON_COUNT_SMALL = 152 * (int)(Screen.PrimaryScreen.WorkingArea.Width / 1920) - 1;
+            int MAX_ICON_COUNT_LARGE = 41 * (int)(Screen.PrimaryScreen.WorkingArea.Height / 1920) - 1;
+            
 
             string[] applicationsDetected = new string[300]; 
             
@@ -61,13 +64,24 @@ namespace BetterTaskbar
             this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
             this.ShowInTaskbar = false;
 
+
             //Getting and accessing the flowPanel
             ToolStrip taskBarFlowLayout = this.taskbarIcons;
             taskBarFlowLayout.Height = 60;
             taskBarFlowLayout.AutoSize = false;
             taskBarFlowLayout.LayoutStyle = ToolStripLayoutStyle.Flow;
-            taskBarFlowLayout.ImageScalingSize = new Size(20, 20);
-            taskBarFlowLayout.AllowItemReorder = true;
+            
+            if(ICON_SIZE == "LARGE")
+            {
+                taskBarFlowLayout.ImageScalingSize = new Size(20 * 2, 20 * 2);
+                taskBarFlowLayout.AllowItemReorder = true;
+            }
+            else
+            {
+                taskBarFlowLayout.ImageScalingSize = new Size(20, 20 );
+                taskBarFlowLayout.AllowItemReorder = true;
+            }
+
 
             //Read from a file here for shortcuts
             /*using (StreamReader r = new StreamReader("./shortcutList.json"))
@@ -77,9 +91,32 @@ namespace BetterTaskbar
             }
             */
 
-            
-            
-            for(int i=0; i < 152; i++)
+
+            //Options Button
+            Button options = (Button)this.optionsButton;
+
+            EventHandler optionsButton_Click = (object sender, EventArgs e) =>
+            {
+                //Process p = new Process();
+                //p.StartInfo.FileName = "notepad.exe";
+                //p.Start();
+                if (ICON_SIZE == "SMALL")
+                {
+                    ICON_SIZE = "LARGE";
+                }
+                else
+                {
+                    ICON_SIZE = "SMALL";
+                }
+
+
+                
+                //should open a window to select number of screens, size, size of icons/taskbar, color scheme, and etc.
+            };
+
+            options.Click += optionsButton_Click;
+
+            for (int i=0; i < 41; i++)
             {
                 ToolStripButton temp;
                 temp = new ToolStripButton();
@@ -95,14 +132,31 @@ namespace BetterTaskbar
                 //Icon icon = System.Drawing.Icon.ExtractAssociatedIcon("firefox.exe"); //need to find the path for each application to load
                 Image img = icon.ToBitmap(); // Image.FromFile("C:\\Repositories\\BetterTaskbar\\BetterTaskbar\\BetterTaskbar\\test.png");
                 temp.Image = img;
-                if(numberOfIcons <= MAX_ICON_COUNT){
-                    taskBarFlowLayout.Items.Add(temp);
-                    numberOfIcons++;
+                if(ICON_SIZE == "SMALL")
+                {
+                    if (numberOfIcons <= MAX_ICON_COUNT_SMALL)
+                    {
+                        taskBarFlowLayout.Items.Add(temp);
+                        numberOfIcons++;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Max Number of Icons Reached");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Max Number of Icons Reached");
+                    if (numberOfIcons <= MAX_ICON_COUNT_LARGE)
+                    {
+                        taskBarFlowLayout.Items.Add(temp);
+                        numberOfIcons++;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Max Number of Icons Reached");
+                    }
                 }
+                
                 
             }
             
@@ -143,10 +197,29 @@ namespace BetterTaskbar
 
             EventHandler addShortcutEventHandler = (sender, args) =>
             {
-                if(numberOfIcons >= MAX_ICON_COUNT)
+                if (ICON_SIZE == "SMALL")
                 {
-                    MessageBox.Show("Max Number of Icons Reached");
-                    return;
+                    if (numberOfIcons <= MAX_ICON_COUNT_SMALL)
+                    {
+                        
+                    }
+                    else
+                    {
+                        MessageBox.Show("Max Number of Icons Reached");
+                        return;
+                    }
+                }
+                else
+                {
+                    if (numberOfIcons <= MAX_ICON_COUNT_LARGE)
+                    {
+                        
+                    }
+                    else
+                    {
+                        MessageBox.Show("Max Number of Icons Reached");
+                        return;
+                    }
                 }
                 //Create New Window to see items
                 Form addNewShortcutWindow = new Form();
@@ -160,7 +233,7 @@ namespace BetterTaskbar
                 applicationList.SelectionMode = SelectionMode.One;
                 applicationList.BeginUpdate();
                 Console.WriteLine(applicationsDetected.Length);
-                for(int i = 0; i < applicationsDetected.Length && applicationsDetected[i] != null; i++)
+                for (int i = 0; i < applicationsDetected.Length && applicationsDetected[i] != null; i++)
                 {
 
                     applicationList.Items.Add(applicationsDetected[i].ToString().Substring(0, applicationsDetected[i].ToString().IndexOf(':')));
@@ -201,11 +274,9 @@ namespace BetterTaskbar
                 //Icon icon = System.Drawing.Icon.ExtractAssociatedIcon("firefox.exe"); //need to find the path for each application to load
                 Image img = icon.ToBitmap(); // Image.FromFile("C:\\Repositories\\BetterTaskbar\\BetterTaskbar\\BetterTaskbar\\test.png");
                 temp.Image = img;
-                if (numberOfIcons <= MAX_ICON_COUNT)
-                {
-                    taskBarFlowLayout.Items.Add(temp);
-                    numberOfIcons++;
-                }
+
+                taskBarFlowLayout.Items.Add(temp);
+                numberOfIcons++;
 
             };
 
@@ -233,20 +304,29 @@ namespace BetterTaskbar
             Application.Exit();
         }
 
-        private void optionsButton_Click(object sender, EventArgs e)
-        {
-            Process p = new Process();
-            p.StartInfo.FileName = "notepad.exe";
-            p.Start();
-
-            //should open a window to select number of screens, size, size of icons/taskbar, color scheme, and etc.
-        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
 
-        
+        private void optionsButton_Click(object sender, EventArgs e)
+        {
+            Console.Write("Hitting the external option");
+            return;
+            //Process p = new Process();
+            //p.StartInfo.FileName = "notepad.exe";
+            //p.Start();
+            if (ICON_SIZE == "SMALL")
+            {
+                ICON_SIZE = "LARGE";
+            }
+            else
+            {
+                ICON_SIZE = "SMALL";
+            }
+
+            //should open a window to select number of screens, size, size of icons/taskbar, color scheme, and etc.
+        }
     }
 }
