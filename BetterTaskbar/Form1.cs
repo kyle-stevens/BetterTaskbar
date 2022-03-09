@@ -20,6 +20,8 @@ namespace BetterTaskbar
                 appWidth = appWidth + s.WorkingArea.Width;
             }
 
+            Console.WriteLine(appWidth);
+
             InitializeComponent();
             int numberOfIcons = 0;
             int MAX_ICON_COUNT_SMALL = 152 * (int)(appWidth / 1920) - 1;
