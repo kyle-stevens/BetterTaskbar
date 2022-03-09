@@ -57,7 +57,6 @@
             this.optionsButton.TabIndex = 1;
             this.optionsButton.Text = "O";
             this.optionsButton.UseVisualStyleBackColor = true;
-            this.optionsButton.Click += new System.EventHandler(this.optionsButton_Click);
             // 
             // label1
             // 

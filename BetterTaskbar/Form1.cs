@@ -14,10 +14,16 @@ namespace BetterTaskbar
         
         public Form1()
         {
+            int appWidth = 0;
+            foreach (Screen s in Screen.AllScreens)
+            {
+                appWidth = appWidth + s.WorkingArea.Width;
+            }
+
             InitializeComponent();
             int numberOfIcons = 0;
-            int MAX_ICON_COUNT_SMALL = 152 * (int)(Screen.PrimaryScreen.WorkingArea.Width / 1920) - 1;
-            int MAX_ICON_COUNT_LARGE = 41 * (int)(Screen.PrimaryScreen.WorkingArea.Height / 1920) - 1;
+            int MAX_ICON_COUNT_SMALL = 152 * (int)(appWidth / 1920) - 1;
+            int MAX_ICON_COUNT_LARGE = 41 * (int)(appWidth / 1920) - 1;
             
 
             string[] applicationsDetected = new string[300]; 
@@ -103,12 +109,17 @@ namespace BetterTaskbar
                 if (ICON_SIZE == "SMALL")
                 {
                     ICON_SIZE = "LARGE";
+
                 }
                 else
                 {
                     ICON_SIZE = "SMALL";
                 }
-
+                taskBarFlowLayout.Refresh();
+                taskBarFlowLayout.Update();
+                taskBarFlowLayout.Hide();
+                taskBarFlowLayout.Show();   
+                Console.WriteLine("Change Icon Size");
 
                 
                 //should open a window to select number of screens, size, size of icons/taskbar, color scheme, and etc.
@@ -310,23 +321,6 @@ namespace BetterTaskbar
 
         }
 
-        private void optionsButton_Click(object sender, EventArgs e)
-        {
-            Console.Write("Hitting the external option");
-            return;
-            //Process p = new Process();
-            //p.StartInfo.FileName = "notepad.exe";
-            //p.Start();
-            if (ICON_SIZE == "SMALL")
-            {
-                ICON_SIZE = "LARGE";
-            }
-            else
-            {
-                ICON_SIZE = "SMALL";
-            }
-
-            //should open a window to select number of screens, size, size of icons/taskbar, color scheme, and etc.
-        }
+        
     }
 }
