@@ -81,7 +81,6 @@
             // taskbarIcons
             // 
             this.taskbarIcons.Location = new System.Drawing.Point(0, 0);
-            this.taskbarIcons.MaximumSize = new System.Drawing.Size(1839, 150);
             this.taskbarIcons.MinimumSize = new System.Drawing.Size(1839, 0);
             this.taskbarIcons.Name = "taskbarIcons";
             this.taskbarIcons.Size = new System.Drawing.Size(1839, 25);

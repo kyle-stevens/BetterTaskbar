@@ -21,11 +21,14 @@ namespace BetterTaskbar
             }
 
             Console.WriteLine(appWidth);
+            Console.WriteLine(Screen.AllScreens.Length);
 
             InitializeComponent();
             int numberOfIcons = 0;
-            int MAX_ICON_COUNT_SMALL = 152 * (int)(appWidth / 1920) - 1;
-            int MAX_ICON_COUNT_LARGE = 41 * (int)(appWidth / 1920) - 1;
+            int MAX_ICON_COUNT_SMALL = Screen.AllScreens.Length * 152 * (int)(appWidth / 1920) - 1;
+            int MAX_ICON_COUNT_LARGE = Screen.AllScreens.Length * 41 * (int)(appWidth / 1920) - 1;
+
+            Console.WriteLine(MAX_ICON_COUNT_SMALL);
             
 
             string[] applicationsDetected = new string[300]; 
@@ -43,7 +46,7 @@ namespace BetterTaskbar
                         if(subkey.GetValue("InstallLocation") != null)
                         {
                             applicationsDetected[count] = (subkey.GetValue("DisplayName").ToString() + ":" + subkey.GetValue("InstallLocation").ToString());
-                            Console.WriteLine("Element Added");
+                            //Console.WriteLine("Element Added");
                             count++;
                         }
                         
@@ -57,7 +60,7 @@ namespace BetterTaskbar
             //Screen Sizing and Positioning Logic
             StartPosition = FormStartPosition.Manual;
             Rectangle screen = Screen.PrimaryScreen.WorkingArea;
-            int w = screen.Width;
+            int w = appWidth;
             int h = 100; //will need to adjust sizing later;
             this.Location = new Point(0, (screen.Height - h) +37);
             this.Size = new Size(w+20, h);
@@ -76,6 +79,12 @@ namespace BetterTaskbar
             //Getting and accessing the flowPanel
             ToolStrip taskBarFlowLayout = this.taskbarIcons;
             taskBarFlowLayout.Height = 60;
+            Console.WriteLine(); Console.WriteLine(); Console.WriteLine();
+            Console.WriteLine(appWidth);
+            taskBarFlowLayout.Width = appWidth - 81;
+            
+            Console.WriteLine(taskBarFlowLayout.Width);
+            Console.WriteLine(); Console.WriteLine(); Console.WriteLine();
             taskBarFlowLayout.AutoSize = false;
             taskBarFlowLayout.LayoutStyle = ToolStripLayoutStyle.Flow;
             
@@ -99,10 +108,11 @@ namespace BetterTaskbar
             }
             */
 
+            
 
             //Options Button
             Button options = (Button)this.optionsButton;
-
+            options.Location = new Point(appWidth - 75, options.Location.Y);
             EventHandler optionsButton_Click = (object sender, EventArgs e) =>
             {
                 //Process p = new Process();
@@ -129,7 +139,7 @@ namespace BetterTaskbar
 
             options.Click += optionsButton_Click;
 
-            for (int i=0; i < 41; i++)
+            for (int i=0; i < MAX_ICON_COUNT_SMALL; i++)
             {
                 ToolStripButton temp;
                 temp = new ToolStripButton();
@@ -173,7 +183,7 @@ namespace BetterTaskbar
                 
             }
             
-
+            Console.WriteLine(numberOfIcons);
 
 
             var fb = this.ClientRectangle;
@@ -295,6 +305,10 @@ namespace BetterTaskbar
 
             Button addShortcut = this.addShortcutButton;
             addShortcut.Click += addShortcutEventHandler;
+            addShortcut.Location = new Point(appWidth - 75,addShortcut.Location.Y);
+
+            Button closeButton = this.exitButton;
+            closeButton.Location = new Point(appWidth - 49, closeButton.Location.Y);
         }
 
         private void funcMouseCaptureChanged(object sender, EventArgs e)
