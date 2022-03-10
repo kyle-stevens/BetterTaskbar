@@ -62,7 +62,7 @@ namespace BetterTaskbar
 
             //Determine Maximum Number of Icons
             int numberOfIcons = 0;
-            int MAX_ICON_COUNT = Screen.AllScreens.Length * 152 * (int)(appWidth / 1920) ;
+            int MAX_ICON_COUNT = 152 * (int)(appWidth / 1920) ;
 
             //Getting Taskbar
             ToolStrip taskBarFlowLayout = this.taskbarIcons;
