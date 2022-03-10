@@ -72,6 +72,19 @@ namespace BetterTaskbar
             ToolStrip taskBarFlowLayout = this.taskbarIcons;
 
 
+            //Context Menu Event Handlers
+            EventHandler removeShortcutClick = (object sender, EventArgs e) =>
+            {
+                ToolStrip t = (ToolStrip)sender; //exception is occurring here.
+                Console.WriteLine(t.GetChildAtPoint(MousePosition));
+
+            };
+
+
+            //Creating Icon Context Menus
+            ContextMenu cm = new ContextMenu();
+            cm.MenuItems.Add("Remove Shortcut", new EventHandler(removeShortcutClick));
+            taskBarFlowLayout.ContextMenu = cm;
             //Screen Sizing and Positioning Logic for Elements
 
 
@@ -109,6 +122,7 @@ namespace BetterTaskbar
                     return;
                 }
 
+                /*
                 //Create New Window to see items
                 Form addNewShortcutWindow = new Form();
                 addNewShortcutWindow.AutoSize = false;
@@ -146,25 +160,50 @@ namespace BetterTaskbar
                 addNewShortcutWindow.Controls.Add(findAppManually);
 
                 addNewShortcutWindow.Show();
+                */
 
-                ToolStripButton temp;
-                temp = new ToolStripButton();
-                temp.Tag = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"; //Text is the name of application to open
-                //need to figure out text visibility
-                temp.Click += button_Clicked;
-                //temp.MinimumSize = new Size(0, 0);
-                //temp.MaximumSize = new Size(50, 50);
-                temp.AutoSize = false;
-                temp.Height = 100;
-                temp.Width = 100;
-                Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(temp.Tag.ToString());
+                try
+                {
+                    string sFileName = "";
 
-                //Icon icon = System.Drawing.Icon.ExtractAssociatedIcon("firefox.exe"); //need to find the path for each application to load
-                Image img = icon.ToBitmap(); // Image.FromFile("C:\\Repositories\\BetterTaskbar\\BetterTaskbar\\BetterTaskbar\\test.png");
-                temp.Image = img;
+                    OpenFileDialog choofdlog = new OpenFileDialog();
+                    choofdlog.Filter = "All Files (*.*)|*.*";
+                    choofdlog.FilterIndex = 1;
+                    choofdlog.Multiselect = true;
 
-                taskBarFlowLayout.Items.Add(temp);
-                numberOfIcons++;
+                    if (choofdlog.ShowDialog() == DialogResult.OK)
+                    {
+                        sFileName = choofdlog.FileName;
+                        string[] arrAllFiles = choofdlog.FileNames; //used when Multiselect = true           
+                    }
+
+                    ToolStripButton temp;
+                    temp = new ToolStripButton();
+                    temp.Tag = sFileName;
+                    //temp.Tag = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"; //Text is the name of application to open
+                    //need to figure out text visibility
+                    temp.Click += button_Clicked;
+                    //temp.MinimumSize = new Size(0, 0);
+                    //temp.MaximumSize = new Size(50, 50);
+                    temp.AutoSize = false;
+                    temp.Height = 25;
+                    temp.Width = 25;
+                    Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(temp.Tag.ToString());
+
+                    //Setting Context Menu
+                    //Need to do a little more work for context menu 
+
+                    //Icon icon = System.Drawing.Icon.ExtractAssociatedIcon("firefox.exe"); //need to find the path for each application to load
+                    Image img = icon.ToBitmap(); // Image.FromFile("C:\\Repositories\\BetterTaskbar\\BetterTaskbar\\BetterTaskbar\\test.png");
+                    temp.Image = img;
+
+                    taskBarFlowLayout.Items.Add(temp);
+                    numberOfIcons++;
+                } catch (Exception ex)
+                {
+                    Console.WriteLine("Exception Occurred");
+                }
+                
 
             };
 
@@ -200,7 +239,7 @@ namespace BetterTaskbar
 
 
             //Debug Population of Taskbar
-            for (int i=0; i < MAX_ICON_COUNT; i++)
+            for (int i=0; i < MAX_ICON_COUNT - 5; i++)
             {
                 ToolStripButton temp;
                 temp = new ToolStripButton();
