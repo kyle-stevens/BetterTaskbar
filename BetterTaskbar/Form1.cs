@@ -62,7 +62,7 @@ namespace BetterTaskbar
 
             //Determine Maximum Number of Icons
             int numberOfIcons = 0;
-            int MAX_ICON_COUNT = Screen.AllScreens.Length * 152 * (int)(appWidth / 1920) - 1;
+            int MAX_ICON_COUNT = Screen.AllScreens.Length * 152 * (int)(appWidth / 1920) ;
 
             //Getting Taskbar
             ToolStrip taskBarFlowLayout = this.taskbarIcons;
@@ -77,6 +77,19 @@ namespace BetterTaskbar
             EventHandler optionsButton_Click = (object sender, EventArgs e) =>
             {
                 Console.WriteLine("Options Menu");
+                //Create New Window to see items
+                Form addNewShortcutWindow = new Form();
+                addNewShortcutWindow.AutoSize = false;
+                addNewShortcutWindow.Size = new Size(500, 500);
+
+                Label lbl = new Label();
+                lbl.Location = new Point(10, 400);
+                lbl.Width = 500;
+                lbl.Text = numberOfIcons.ToString();
+
+                addNewShortcutWindow.Controls.Add(lbl);
+
+                addNewShortcutWindow.Show();
             };
 
             //Add Button Handler
