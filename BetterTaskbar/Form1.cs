@@ -64,109 +64,34 @@ namespace BetterTaskbar
             int numberOfIcons = 0;
             int MAX_ICON_COUNT = Screen.AllScreens.Length * 152 * (int)(appWidth / 1920) - 1;
 
-            //Screen Sizing and Positioning Logic for Elements
-            //Close Button
-            Button closeButton = this.exitButton;
-            closeButton.Location = new Point(appWidth - 49, closeButton.Location.Y);
-
-            //Options Button
-            Button options = (Button)this.optionsButton;
-            options.Location = new Point(appWidth - 75, options.Location.Y);
-            options.Click += optionsButton_Click;
-
-            //Add Button
-            Button addShortcut = this.addShortcutButton;
-            addShortcut.Click += addShortcutEventHandler;
-            addShortcut.Location = new Point(appWidth - 75,addShortcut.Location.Y);
-
-            StartPosition = FormStartPosition.Manual;
-            Rectangle screen = Screen.PrimaryScreen.WorkingArea;
-            int w = appWidth;
-            int h = 100; //will need to adjust sizing later;
-            this.Location = new Point(0, (screen.Height - h) +37);
-            this.Size = new Size(w+20, h);
-
-            //Getting and accessing the flowPanel
+            //Getting Taskbar
             ToolStrip taskBarFlowLayout = this.taskbarIcons;
-            taskBarFlowLayout.AutoSize = false;
-            taskBarFlowLayout.MaximumSize = new Size((appWidth-81), 60);
-            taskBarFlowLayout.Height = 60;
-            taskBarFlowLayout.Width = appWidth - 81;
-            taskBarFlowLayout.LayoutStyle = ToolStripLayoutStyle.Flow;
-            taskBarFlowLayout.ImageScalingSize = new Size(20, 20 );
-            taskBarFlowLayout.AllowItemReorder = true;
 
+
+            //Screen Sizing and Positioning Logic for Elements
+
+
+
+            //Event Handler Delcaration
             //Options Button Handler
             EventHandler optionsButton_Click = (object sender, EventArgs e) =>
             {
-              Console.WriteLine("Options Menu");
+                Console.WriteLine("Options Menu");
             };
 
-            //Debug Population of Taskbar
-            for (int i=0; i < MAX_ICON_COUNT_SMALL; i++)
-            {
-                ToolStripButton temp;
-                temp = new ToolStripButton();
-                temp.Tag = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"; //Text is the name of application to open
-                temp.Click += button_Clicked;
-                temp.Height = 25;
-                temp.Width = 25;
-                Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(temp.Tag.ToString());
-                Image img = icon.ToBitmap(); // Image.FromFile("C:\\Repositories\\BetterTaskbar\\BetterTaskbar\\BetterTaskbar\\test.png");
-                temp.Image = img;
-                taskBarFlowLayout.Items.Add(temp);
-                numberOfIcons++;
-              }
-
-            var fb = this.ClientRectangle;
-
-            EventHandler tickHandler = (sender, args) =>
-            {
-                var mp = Cursor.Position;
-                if ((mp.X < fb.X + fb.Width)
-                && (mp.X > fb.X)
-                && (mp.Y > screen.Height - fb.Height)
-                && (mp.Y < screen.Height))
-                {
-                    this.Location = new Point(0, (screen.Height - h) + 37);
-                }
-                else
-                {
-                    this.Location = new Point(0, (screen.Height - h) + 137);
-                }
-            };
-
-            Timer t1 = new Timer();
-            t1.Interval = 500;
-            t1.Tick += tickHandler;
-            t1.Start();
-
+            //Add Button Handler
             EventHandler addShortcutEventHandler = (sender, args) =>
             {
-                if (ICON_SIZE == "SMALL")
+                if (numberOfIcons <= MAX_ICON_COUNT)
                 {
-                    if (numberOfIcons <= MAX_ICON_COUNT_SMALL)
-                    {
 
-                    }
-                    else
-                    {
-                        MessageBox.Show("Max Number of Icons Reached");
-                        return;
-                    }
                 }
                 else
                 {
-                    if (numberOfIcons <= MAX_ICON_COUNT_LARGE)
-                    {
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("Max Number of Icons Reached");
-                        return;
-                    }
+                    MessageBox.Show("Max Number of Icons Reached");
+                    return;
                 }
+
                 //Create New Window to see items
                 Form addNewShortcutWindow = new Form();
                 addNewShortcutWindow.AutoSize = false;
@@ -225,6 +150,78 @@ namespace BetterTaskbar
                 numberOfIcons++;
 
             };
+
+            //Close Button
+            Button closeButton = this.exitButton;
+            closeButton.Location = new Point(appWidth - 49, closeButton.Location.Y);
+
+            //Options Button
+            Button options = (Button)this.optionsButton;
+            options.Location = new Point(appWidth - 75, options.Location.Y);
+            options.Click += optionsButton_Click;
+
+            //Add Button
+            Button addShortcut = this.addShortcutButton;
+            addShortcut.Click += addShortcutEventHandler;
+            addShortcut.Location = new Point(appWidth - 75,addShortcut.Location.Y);
+
+            StartPosition = FormStartPosition.Manual;
+            Rectangle screen = Screen.PrimaryScreen.WorkingArea;
+            int w = appWidth;
+            int h = 100; //will need to adjust sizing later;
+            this.Location = new Point(0, (screen.Height - h) +37);
+            this.Size = new Size(w+20, h);
+
+            //Getting and accessing the flowPanel
+            taskBarFlowLayout.AutoSize = false;
+            taskBarFlowLayout.MaximumSize = new Size((appWidth-81), 60);
+            taskBarFlowLayout.Height = 60;
+            taskBarFlowLayout.Width = appWidth - 81;
+            taskBarFlowLayout.LayoutStyle = ToolStripLayoutStyle.Flow;
+            taskBarFlowLayout.ImageScalingSize = new Size(20, 20 );
+            taskBarFlowLayout.AllowItemReorder = true;
+
+
+            //Debug Population of Taskbar
+            for (int i=0; i < MAX_ICON_COUNT; i++)
+            {
+                ToolStripButton temp;
+                temp = new ToolStripButton();
+                temp.Tag = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"; //Text is the name of application to open
+                temp.Click += button_Clicked;
+                temp.Height = 25;
+                temp.Width = 25;
+                Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(temp.Tag.ToString());
+                Image img = icon.ToBitmap(); // Image.FromFile("C:\\Repositories\\BetterTaskbar\\BetterTaskbar\\BetterTaskbar\\test.png");
+                temp.Image = img;
+                taskBarFlowLayout.Items.Add(temp);
+                numberOfIcons++;
+              }
+
+            var fb = this.ClientRectangle;
+
+            EventHandler tickHandler = (sender, args) =>
+            {
+                var mp = Cursor.Position;
+                if ((mp.X < fb.X + fb.Width)
+                && (mp.X > fb.X)
+                && (mp.Y > screen.Height - fb.Height)
+                && (mp.Y < screen.Height))
+                {
+                    this.Location = new Point(0, (screen.Height - h) + 37);
+                }
+                else
+                {
+                    this.Location = new Point(0, (screen.Height - h) + 137);
+                }
+            };
+
+            Timer t1 = new Timer();
+            t1.Interval = 500;
+            t1.Tick += tickHandler;
+            t1.Start();
+
+            
 
 
         }
