@@ -85,6 +85,7 @@ namespace BetterTaskbar
                 Console.WriteLine(currentButtonFocus.ToString());
                 Console.WriteLine(MousePosition.ToString());
                 currentButtonFocus.GetCurrentParent().Items.Remove(currentButtonFocus);
+                numberOfIcons--;
 
             };
 
