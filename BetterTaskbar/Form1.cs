@@ -71,12 +71,20 @@ namespace BetterTaskbar
             //Getting Taskbar
             ToolStrip taskBarFlowLayout = this.taskbarIcons;
 
+            ToolStripButton currentButtonFocus = new ToolStripButton();
 
             //Context Menu Event Handlers
+            MouseEventHandler contextMenuGetButton = (object sender, MouseEventArgs e) =>
+            {
+                currentButtonFocus = (ToolStripButton)sender;
+            };
+
             EventHandler removeShortcutClick = (object sender, EventArgs e) =>
             {
-                ToolStrip t = (ToolStrip)sender; //exception is occurring here.
-                Console.WriteLine(t.GetChildAtPoint(MousePosition));
+                //ToolStrip t = (ToolStrip)sender; //exception is occurring here.
+                Console.WriteLine(currentButtonFocus.ToString());
+                Console.WriteLine(MousePosition.ToString());
+                currentButtonFocus.GetCurrentParent().Items.Remove(currentButtonFocus);
 
             };
 
@@ -196,7 +204,7 @@ namespace BetterTaskbar
                     //Icon icon = System.Drawing.Icon.ExtractAssociatedIcon("firefox.exe"); //need to find the path for each application to load
                     Image img = icon.ToBitmap(); // Image.FromFile("C:\\Repositories\\BetterTaskbar\\BetterTaskbar\\BetterTaskbar\\test.png");
                     temp.Image = img;
-
+                    temp.MouseDown += contextMenuGetButton;
                     taskBarFlowLayout.Items.Add(temp);
                     numberOfIcons++;
                 } catch (Exception ex)
@@ -238,6 +246,8 @@ namespace BetterTaskbar
             taskBarFlowLayout.AllowItemReorder = true;
 
 
+            /*
+
             //Debug Population of Taskbar
             for (int i=0; i < MAX_ICON_COUNT - 5; i++)
             {
@@ -250,9 +260,13 @@ namespace BetterTaskbar
                 Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(temp.Tag.ToString());
                 Image img = icon.ToBitmap(); // Image.FromFile("C:\\Repositories\\BetterTaskbar\\BetterTaskbar\\BetterTaskbar\\test.png");
                 temp.Image = img;
+                temp.MouseDown += contextMenuGetButton;
                 taskBarFlowLayout.Items.Add(temp);
                 numberOfIcons++;
               }
+
+            */
+
 
             var fb = this.ClientRectangle;
 
