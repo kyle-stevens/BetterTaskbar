@@ -10,6 +10,8 @@ namespace BetterTaskbar
 {
     public partial class Form1 : Form
     {
+
+        
         public Form1()
         {
 
@@ -36,6 +38,11 @@ namespace BetterTaskbar
             }
 
             InitializeComponent();
+
+            Config config = new Config();
+            config.iconSize[0] = 25;
+            config.iconSize[1] = 25;
+            //need to add in save and load of config
 
             //Setting Up Windows Form Attributes
             this.WindowState = FormWindowState.Normal;
@@ -246,6 +253,8 @@ namespace BetterTaskbar
             taskBarFlowLayout.ImageScalingSize = new Size(20, 20 );
             taskBarFlowLayout.AllowItemReorder = true;
 
+
+            
 
             /*
 
