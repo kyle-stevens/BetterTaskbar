@@ -256,10 +256,10 @@ namespace BetterTaskbar
 
             
 
-            /*
+            
 
             //Debug Population of Taskbar
-            for (int i=0; i < MAX_ICON_COUNT - 5; i++)
+            for (int i=0; i < MAX_ICON_COUNT; i++)
             {
                 ToolStripButton temp;
                 temp = new ToolStripButton();
@@ -275,7 +275,7 @@ namespace BetterTaskbar
                 numberOfIcons++;
               }
 
-            */
+            
 
 
             var fb = this.ClientRectangle;
