@@ -260,7 +260,7 @@ namespace BetterTaskbar
 
             
 
-            
+            /*
 
             //Debug Population of Taskbar
             for (int i=0; i < MAX_ICON_COUNT; i++)
@@ -279,6 +279,7 @@ namespace BetterTaskbar
                 numberOfIcons++;
               }
 
+            */
             
 
 
@@ -352,10 +353,18 @@ namespace BetterTaskbar
         private void exitButton_Click(object sender, EventArgs e)
         {
             ToolStrip taskbarFlowLayout = this.taskbarIcons;
+            String[] lines = new String[taskbarFlowLayout.Items.Count];
+            int i = 0;
+
             foreach(ToolStripButton button in taskbarFlowLayout.Items)
             {
                 Console.WriteLine(button.Tag);
+                lines[i] = button.Tag.ToString();
+                i++;
+                
             }
+            //Console.WriteLine(lines.ToString());
+            File.WriteAllLines(@"C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\CONFIG.conf", lines);
             Application.Exit();
         }
 
