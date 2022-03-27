@@ -43,6 +43,7 @@ namespace BetterTaskbar
             config.iconSize[0] = 25;
             config.iconSize[1] = 25;
             //need to add in save and load of config
+            //loading shortcuts from file
 
             //Setting Up Windows Form Attributes
             this.WindowState = FormWindowState.Normal;
@@ -55,6 +56,9 @@ namespace BetterTaskbar
             //Making it non-resizable
             this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
             this.ShowInTaskbar = false;
+
+
+            
 
             //Getting Width of All Screens
             int appWidth = 0;
@@ -301,8 +305,32 @@ namespace BetterTaskbar
             t1.Tick += tickHandler;
             t1.Start();
 
-            
 
+            foreach (string line in System.IO.File.ReadLines(@"C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\CONFIG.conf"))
+            {
+                ToolStripButton temp;
+                temp = new ToolStripButton();
+                temp.Tag = line;
+                //temp.Tag = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"; //Text is the name of application to open
+                //need to figure out text visibility
+                temp.Click += button_Clicked;
+                //temp.MinimumSize = new Size(0, 0);
+                //temp.MaximumSize = new Size(50, 50);
+                temp.AutoSize = false;
+                temp.Height = 25;
+                temp.Width = 25;
+                Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(temp.Tag.ToString());
+
+                //Setting Context Menu
+                //Need to do a little more work for context menu 
+
+                //Icon icon = System.Drawing.Icon.ExtractAssociatedIcon("firefox.exe"); //need to find the path for each application to load
+                Image img = icon.ToBitmap(); // Image.FromFile("C:\\Repositories\\BetterTaskbar\\BetterTaskbar\\BetterTaskbar\\test.png");
+                temp.Image = img;
+                temp.MouseDown += contextMenuGetButton;
+                taskBarFlowLayout.Items.Add(temp);
+                numberOfIcons++;
+            }
 
         }
 
@@ -323,6 +351,11 @@ namespace BetterTaskbar
 
         private void exitButton_Click(object sender, EventArgs e)
         {
+            ToolStrip taskbarFlowLayout = this.taskbarIcons;
+            foreach(ToolStripButton button in taskbarFlowLayout.Items)
+            {
+                Console.WriteLine(button.Tag);
+            }
             Application.Exit();
         }
 
