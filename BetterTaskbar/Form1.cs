@@ -307,7 +307,7 @@ namespace BetterTaskbar
             t1.Start();
 
 
-            foreach (string line in System.IO.File.ReadLines(@"C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\CONFIG.conf"))
+            foreach (string line in System.IO.File.ReadLines(@".\CONFIG.conf"))
             {
                 ToolStripButton temp;
                 temp = new ToolStripButton();
@@ -364,7 +364,7 @@ namespace BetterTaskbar
                 
             }
             //Console.WriteLine(lines.ToString());
-            File.WriteAllLines(@"C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\CONFIG.conf", lines);
+            File.WriteAllLines(@".\CONFIG.conf", lines);
             Application.Exit();
         }
 
