@@ -83,7 +83,7 @@
             this.taskbarIcons.Location = new System.Drawing.Point(0, 0);
             this.taskbarIcons.MinimumSize = new System.Drawing.Size(1839, 0);
             this.taskbarIcons.Name = "taskbarIcons";
-            this.taskbarIcons.Size = new System.Drawing.Size(1839, 25);
+            this.taskbarIcons.Size = new System.Drawing.Size(1904, 25);
             this.taskbarIcons.TabIndex = 5;
             this.taskbarIcons.Text = "toolStrip1";
             // 

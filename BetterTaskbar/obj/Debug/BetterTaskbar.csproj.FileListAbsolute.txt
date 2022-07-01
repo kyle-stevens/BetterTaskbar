@@ -11,3 +11,16 @@ C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskba
 C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.pdb
 C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\bin\Debug\Json.Net.dll
 C:\Repositories\BetterTaskbar\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.csproj.CopyComplete
+D:\Github\BetterTaskbar\BetterTaskbar\bin\Debug\BetterTaskbar.exe.config
+D:\Github\BetterTaskbar\BetterTaskbar\bin\Debug\BetterTaskbar.exe
+D:\Github\BetterTaskbar\BetterTaskbar\bin\Debug\BetterTaskbar.pdb
+D:\Github\BetterTaskbar\BetterTaskbar\bin\Debug\Json.Net.dll
+D:\Github\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.csproj.AssemblyReference.cache
+D:\Github\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.csproj.SuggestedBindingRedirects.cache
+D:\Github\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.Form1.resources
+D:\Github\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.Properties.Resources.resources
+D:\Github\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.csproj.GenerateResource.cache
+D:\Github\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.csproj.CoreCompileInputs.cache
+D:\Github\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.csproj.CopyComplete
+D:\Github\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.exe
+D:\Github\BetterTaskbar\BetterTaskbar\obj\Debug\BetterTaskbar.pdb
